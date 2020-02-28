@@ -36,6 +36,6 @@ int main()
         children.at(parent).push_back(i);
     }
 
-    count << complete_time(children, 0) << endl;
+    cout << complete_time(children, 0) << endl;
 
 }
