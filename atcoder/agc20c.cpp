@@ -2,24 +2,35 @@
 using namespace std;
 
 typedef long long ll;
+
 const ll M = 4000000;
 
-ll n, sum;
-bitset<M+5> v;
-int main() {
-    cin >> n;
-    v[0] = 1;
-    while (--n) {
+ll n;
+ll sum;
+bitset<M + 5> v;
+//bool v[M + 5];
+
+int main()
+{
+    scanf("%lld", &n);
+    v[0] = true;
+    while(n--)
+    {
         ll t;
-        cin >> t;
+        scanf("%lld", &t);
         sum += t;
         v |= (v << t);
+//        for(ll i = M; i >= t; i--)
+//        {
+//            v[i] |= v[i - t];
+//        }
     }
-    for (ll i = (sum+1)/2; i <= sum; i++) {
-        if (v[i]) {
-            cout << i << endl;
+    for(ll i = (sum + 1) / 2; i <= sum; i++)
+    {
+        if(v[i])
+        {
+            cout<<i<<endl;
             return 0;
-        } else {
         }
     }
     return 0;
