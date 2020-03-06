@@ -8,7 +8,6 @@ const ll M = 4000000;
 ll n;
 ll sum;
 bitset<M + 5> v;
-//bool v[M + 5];
 
 int main()
 {
@@ -20,10 +19,6 @@ int main()
         scanf("%lld", &t);
         sum += t;
         v |= (v << t);
-//        for(ll i = M; i >= t; i--)
-//        {
-//            v[i] |= v[i - t];
-//        }
     }
     for(ll i = (sum + 1) / 2; i <= sum; i++)
     {
