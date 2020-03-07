@@ -411,3 +411,201 @@ using namespace std;
 //     }
 //     return 0;
 // }
+
+// 二部グラフ判定
+// - 二部グラフとは「白頂点同士が辺で結ばれることなく，黒頂点同士が辺で結ばれることもないように全頂点を白・黒に塗り分けられるグラフ」のこと
+// - DFSで与えられたグラフが二部グラフであるかを判定することができる
+// - Union-FindでもBFSでも解ける
+// - DFSの始点となる頂点の色を確定させると芋づる式に全頂点の色が決まっていくので同じ色どうしが隣り合わないかどうかを確認すれば良い
+//
+// using Graph = vector<vector<int>>;
+//
+// vector<int> color; // color[i] = 1: 黒確定/ 0: 白確定/ -1:未訪問
+// bool dfs(const Graph &G, int v, int current_color = 0) {
+//     color[v] = current_color;
+//     for (auto w : G[v]) {
+//         // 隣接頂点の色がすでに確定している場合
+//         if (color[w] != -1) {
+//             if (color[w] == current_color) {
+//                 return false; // 同じ色が隣接してはいけない
+//             } else {
+//                 continue;
+//             }
+//         }
+//         // 隣接頂点に反対の色をアサインして再帰的に探索し，一度でもfalseが返ってきたらダメ
+//         if (!dfs(G, w, 1 - current_color)) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
+//
+// int main() {
+//     int N, M; cin >> N >> M;
+//     Graph G(N);
+//     for (int i = 0; i < M; i++) {
+//         int a, b; cin >> a >> b;
+//         G[a].push_back(b);
+//         G[b].push_back(a);
+//     }
+//     color.assign(N, -1);
+//     bool is_bipartite = true;
+//     for (int v = 0; v < N; v++) {
+//         if (color[v] != -1) { // vが訪問済みだったらスルー: 連結でないグラフを考慮
+//             continue;
+//         }
+//         if (!dfs(G, v)) {
+//             is_bipartite = false;
+//         }
+//     }
+//     return 0;
+// }
+
+// 根のない木の走査
+// - 木は「閉路がない連結なグラフ」でしなかいので，木には常に根があるというわけではない．
+// - 与えられた木に対して，ある頂点を根として選んだときその木が根付き木になるかどうかを判別する問題を考える
+// - 根候補として選んだ頂点からDFSしていって，全頂点を訪問できていればその頂点は根として採用できる
+// - ある頂点vの隣接頂点wを順番に見ていくときに，wがvの親と等しいときwは必ず訪問済みであるはず
+
+// using Graph = vector<vector<int>>;
+//
+// // v: 現在探索中の頂点
+// // p: vの親頂点（pが根のときは-1）
+// void dfs(const Graph &G, int v, int p) {
+//     for (auto w : G[v]) {
+//         if (w == p) {
+//             continue; // pはvの親なので探索済み
+//         }
+//         dfs(G, w, v); // vはwの親
+//     }
+// }
+//
+// int main() {
+//     int N; cin >> N;
+//     Graph G(N);
+//     for (int i = 0; i < N-1; i++) { // N頂点から成る木に含まれる辺はN-1本
+//         int a, b; cin >> a >> b;
+//         G[a].push_back(b);
+//         G[b].push_back(a);
+//     }
+//     int root = 0;
+//     dfs(G, root, -1);
+//     return 0;
+// }
+
+// 木の深さ
+// - dfsに引数として頂点vの深さdを与えてやれば良い
+// // v: 現在探索中の頂点
+// // p: vの親頂点（pが根のときは-1）
+// // d: vの深さ
+// void dfs(const Graph &G, int v, int p, int d) {
+//     depth[v] = d;
+//     for (auto w : G[v]) {
+//         if (w == p) {
+//             continue; // pはvの親なので探索済み
+//         }
+//         dfs(G, w, v, d+1); // vはwの親
+//     }
+// }
+
+// 部分木のサイズ
+// - 頂点vを根とする部分木のサイズ = Σ(vの子ノードcを根とする部分木のサイズ) + 1
+// - 頂点vについての情報を求めるのにvの子ノードについての情報が求まっている必要があるような処理は「帰りがけ時に行う」
+// - 子ノードの情報を用いて親ノードの情報を更新する＝木DP
+
+// using Graph = vector<vector<int>>;
+//
+// vector<int> depth;
+// vector<int> subtree_size;
+// void dfs(const Graph &G, int v, int p, int d) {
+//
+//     // 行きがけ時に頂点の深さを更新
+//     depth[v] = d;
+//
+//     for (auto w : G[v]) {
+//         if (w == p) {
+//             continue;
+//         }
+//         dfs(G, w, v, d+1);
+//     }
+//
+//     // 帰りがけ時にsubtree_sizeを更新
+//     subtree_size[v] = 1;
+//     for (auto c : G[v]) {
+//         if (c == p) {
+//             continue;
+//         }
+//         subtree_size[v] += subtree_size[c];
+//     }
+// }
+//
+// int main() {
+//     int N; cin >> N;
+//     Graph G(N);
+//     for (int i = 0; i < N-1; i++) {
+//         int a, b; cin >> a >> b;
+//         G[a].push_back(b);
+//         G[b].push_back(a);
+//     }
+//     int root = 0;
+//     depth.assign(N, 0);
+//     subtree_size.assign(N, 0);
+//     dfs(G, root, -1, 0);
+//     return 0;
+// }
+
+// 行きがけ時になにかする <- 親ノードの情報を子ノードに配る
+// 帰りがけ時になにかする <- 子ノードの情報を親ノードの集める
+
+// トポロジカルソート
+// - サイクルのない有向グラフDAGに対して，頂点を辺の向きに装用に一列に並べること
+// - 「DAGであること」と「トポロジカルソートができるグラフであること」は同値
+// - グラフに対するトポロジカルソートは「再帰関数から抜ける順番の逆」で求められる
+
+// using Graph = vector<vector<int>>;
+//
+// void dfs(const Graph &G, int v, vector<bool> &seen, vector<int> &order) {
+//     seen[v] = true;
+//     for (auto w : G[v]) {
+//         if (seen[w]) {
+//             continue;
+//         }
+//         dfs(G, w, seen, order);
+//     }
+//     order.push_back(v); // 再帰関数を抜けるタイミングで自分自身を登録
+// }
+//
+// int main() {
+//     int N, M; cin >> N >> M;
+//     Graph G(N);
+//     for (int i = 0; i < M; i++) {
+//         int a, b; cin >> a >> b;
+//         G[a].push_back(b);
+//     }
+//     vector<bool> seen(N, 0);
+//     vector<int> order;
+//     for (int v = 0; v < N; v++) {
+//         if (seen[v]) {
+//             continue;
+//         }
+//         dfs(G, v, seen, order);
+//     }
+//     reverse(order.begin(), order.end());
+//     for (auto v : order) {
+//         cout << v << "-> ";
+//     }
+//     cout << endl;
+//     return 0;
+// }
+
+// サイクル検知
+// - 与えられたグラフに対してサイクルが存在するかを判定する
+// - サイクルのない無向グラフは木の集合なので「森」
+// - サイクルのない有向グラフはDAG
+// - 与えられたグラフにサイクルがあるとは「頂点vから出発した探索が，vから行くことのできる全頂点の探索を終えるよりも先に（つまり頂点vの帰りがけより前に）vに戻ってきてしまう」ということ
+// - seen[v]: 行きがけの意味で頂点vに訪問済みかどうかを記録する
+// - finished[v]: 帰りがけの意味で頂点vに訪問済みであるかどうかを記録する
+// - seen[v] == true && finished[v] == falseのとき，そのグラフにサイクルが存在することが確定する
+// - サイクルを復元するときには「行きがけ時にpushして帰りがけにpopするスタック」を用意することで得られる
+
+// グラフ探索の考え方と動的計画法とは密接な関係にある．そもそも動的計画法とは，グラフ上の各辺を緩和する考え方が主軸になっている．DAGにおいてはDFS再帰関数の帰りがけにキャッシュにメモするだけでDPになる
