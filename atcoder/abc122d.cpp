@@ -17,9 +17,6 @@ int main() {
             s[i+1] = s[i];
         }
     }
-    for (int i = 0; i < N+1; i++) {
-        cout << s[i] << endl;
-    }
     for (int q = 0; q < Q; q++) {
         int l, r; cin >> l >> r;
         l--; r--;
