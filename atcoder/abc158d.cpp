@@ -5,6 +5,11 @@ string s;
 deque<char> dq;
 int status = 0, q;
 
+// stringの先頭に追加: O(|S|)
+// dequeu: 先頭・末尾に対する追加がO(1)
+
+// 2つのスタックを向かい合わせにすることでも解決することができる
+
 int main()
 {
     cin >> s >> q;

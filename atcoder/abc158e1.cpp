@@ -5,12 +5,11 @@ int main() {
     int n, p; cin >> n >> p;
     string s; cin >> s;
 
-    // p == 2, 5
-    if (10%p == 0) {
+    if (p == 2 || p == 5) {
         long long ans = 0;
-        for (int r = 0; r < n; r++) {
-            if ((s[r]-'0')%p == 0) {
-                ans += r+1;
+        for (int right = 0; right < n; right++) {
+            if ((s[right]-'0')%p == 0) {
+                ans += right+1;
             }
         }
         cout << ans << endl;
@@ -18,11 +17,11 @@ int main() {
     }
 
     vector<int> d(n+1);
-    int ten = 1;
+    int base = 1;
     for (int i = n-1; 0 <= i; i--) {
-        int a = (s[i]-'0') * ten % p;
-        d[i] = (d[i+1] + a)%p;
-        ten *= 10; ten %= p;
+        int a = (s[i]-'0')* base % p;
+        d[i] = (d[i+1]+a) % p;
+        base *= 10; base %= p; // オーバーフロー対策
     }
     vector<int> cnt(p);
     long long ans = 0;

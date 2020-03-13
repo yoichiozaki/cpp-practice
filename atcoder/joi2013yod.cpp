@@ -1,0 +1,1 @@
+https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d
