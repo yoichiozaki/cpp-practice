@@ -13,7 +13,7 @@ vector<int> a = {1, 14, 32, 51, 51, 51, 243, 419, 750, 910};
 // int binary_search(int key) {
 //     int left = 0;
 //     int right = (int)a.size()-1;
-
+//
 //     while (left <= right) {
 //         int mid = left + (right + left) / 2;
 //         if (a[mid] == key) {
