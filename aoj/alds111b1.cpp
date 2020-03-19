@@ -38,7 +38,8 @@ void DFS(int u) {
         int u = S.top();
         int v = next(u);
         if (v != -1) {
-            if (status[v] == GRAY) {
+            if (status[v] == WHITE) {
+                status[v] = GRAY;
                 d[v] = ++ticktock;
                 S.push(v);
             } else {
@@ -62,6 +63,7 @@ int main() {
         status[i] = WHITE;
         d[i] = 0;
         f[i] = 0;
+        neighbor[i] = 0;
     }
 
     for (int i = 0; i < n; i++) {
