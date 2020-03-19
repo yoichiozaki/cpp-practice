@@ -5,7 +5,7 @@ using namespace std;
 
 class Node {
 public:
-    int location;
+    int location; // 座標組のリストPにおけるインデックス
     int parent, left, right;
     Node() {}
 };
@@ -59,6 +59,7 @@ int make_KD_tree(int left, int right, int depth) {
     return t;
 }
 
+// vを根とする部分木内でsx <= x <= tx, sy <= y < tyを満たす点(x, y)をansに格納する
 void find(int v, int sx, int tx, int sy, int ty, int depth, vector<Point> &ans) {
     int x = P[Tree[v].location].x;
     int y = P[Tree[v].location].y;

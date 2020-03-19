@@ -20,7 +20,7 @@ int main() {
                 for (int j = 0; j < V; j++) {
                     long long int cost = edges[i][k] + edges[k][j];
                     if (cost < edges[i][j]) {
-                        if (l == 1) { // l = 0のときに全部も止まるはずなので更に更新されるならば閉路があることになる
+                        if (l == 1) { // l = 0のときに全部求まるはずなので更に更新されるならば閉路があることになる
                             ok = false;
                         } else {
                             edges[i][j] = cost;
