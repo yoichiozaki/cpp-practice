@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// DFS木において．頂点uが結節点 <=> 頂点uとその子孫-uの親より上の先祖間に枝が生えていない
+
 #define MAX 100000
 
 vector<int> G[MAX];
@@ -22,7 +24,7 @@ void dfs(int current, int prev) {
             parent[next] = current;
             dfs(next, current);
             lowest[current] = min(lowest[current], lowest[next]);
-        } else if (next != prev) {
+        } else if (next != prev) { // backedgeあり
             lowest[current] = min(lowest[current], prenum[next]);
         }
     }
@@ -42,7 +44,7 @@ void articulation_points() {
         if (p == 0) np++;
         else if (prenum[p] <= lowest[i]) ap.insert(p);
     }
-    if (1 < np) ap.insert(0);
+    if (1 < np) ap.insert(0); // DFS木の根を親とする頂点が2個以上あるので根は結節点
     for (auto iter = ap.begin(); iter != ap.end(); iter++) {
         cout << *iter << endl;
     }
