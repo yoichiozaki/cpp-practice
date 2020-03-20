@@ -95,7 +95,7 @@ public:
 };
 pair<Point, Point> cross_points(Circle c, Line l) {
     Vector pr = project(l, c.c);
-    assert(pr.abs() <= c.r); // 「円の直径 < 中心と直線の距離」であることを確認
+    // assert(pr.abs() <= c.r); // 「円の直径 < 中心と直線の距離」であることを確認
     Vector e = (l.p2 - l.p1) / abs(l.p2 - l.p1);
     double base = sqrt(c.r * c.r - norm(pr - c.c));
     return make_pair(pr + e * base, pr - e * base);
@@ -105,11 +105,15 @@ typedef vector<Point> Polygon;
 
 int main() {
     cout << fixed << setprecision(12);
+    double cx, cy, r; cin >> cx >> cy >> r;
+    Circle c = Circle(Point(cx, cy), r);
     int q; cin >> q;
     for (int i = 0; i < q; i++) {
-        double xp0, yp0, xp1, yp1, xp2, yp2, xp3, yp3; cin >> xp0 >> yp0 >> xp1 >> yp1 >> xp2 >> yp2 >> xp3 >> yp3;
-        Point cp = cross_point(Segment(xp0, yp0, xp1, yp1), Segment(xp2, yp2, xp3, yp3));
-        cout << cp.x << " " << cp.y << endl;
+        double x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2;
+        Line l = Segment(x1, y1, x2, y2);
+        pair<Point, Point> ps = cross_points(c, l);
+        if (ps.second < ps.first) swap(ps.first, ps.second);
+        cout << ps.first.x << " " << ps.first.y << " " << ps.second.x << " " << ps.second.y << endl;
     }
     return 0;
 }
