@@ -1,36 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, q;
-vector<int> S(n);
-
-bool is_ok(int index, int key) {
-    if (key <= S[index]) return true;
-    else return false;
-}
-
-// key以上となる最小のindexを返す
-int binary_search(int key) {
-    int ng = -1;
-    int ok = (int)S.size();
-    while (1 < abs(ok - ng)) {
-        int mid = (ok + ng) / 2;
-        if (is_ok(mid, key)) ok = mid;
-        else ng = mid;
-    }
-    return ok;
-}
+using Graph = vector<vector<int>>;
 
 int main() {
-    cin >> n; S.resize(n);
-    for (int i = 0; i < n; i++) cin >> S[i];
-    cin >> q;
-    int cnt = 0;
-    for (int i = 0; i < q; i++) {
-        int x; cin >> x;
-        cout << "binary_search(x): " << binary_search(x) << endl;
-        if (0 <= binary_search(x) && binary_search(x) < n) cnt++;
+  int N; cin >> N; // サイクルを1つ含むグラフなので辺数もN
+  Graph G(N);
+  vector<int> degree(N, 0);
+  for (int i = 0; i < N; i++) {
+    int u, v; cin >> u >> v;
+    u--; v--;
+    G[u].push_back(v);
+    G[v].push_back(u);
+    degree[u]++; degree[v]++;
+  }
+
+  queue<int> q;
+  for (int i = 0; i < N; i++) if (degree[i] == 1) q.push(i);
+
+  vector<bool> has_enqueued(N, false); // has_enqueued[i]: 頂点iがキューに入ったことがあるか
+  while (!q.empty()) {
+    int v = q.front(); q.pop();
+    has_enqueued[v] = true;
+    for (auto w: G[v]) {
+      degree[w]--;
+      if (degree[w] == 1) q.push(w);
     }
-    cout << cnt << endl;
-    return 0;
+  }
+
+  int Q; cin >> Q;
+  for (int _ = 0; _ < Q; _++) {
+    int a, b; cin >> a >> b; a--; b--;
+    if (!has_enqueued[a] && !has_enqueued[b]) cout << 2 << endl;
+    else cout << 1 << endl;
+  }
 }
