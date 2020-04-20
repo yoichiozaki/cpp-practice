@@ -1,73 +1,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// REF: https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
+// auto mod int
+// https://youtu.be/L8grWxBlIZ4?t=9858
+// https://youtu.be/ERZuLAxZffQ?t=4807 : optimize
+// https://youtu.be/8uowVvQ_-Mo?t=1329 : division
+const int mod = 1000000007;
+struct mint {
+    long long x;
+    mint(long long x = 0) : x((x % mod + mod) % mod) {}
+    mint operator - () const { return mint(-x); }
+    mint &operator += (const mint a) {
+        if (mod <= (x += a.x)) x -= mod;
+        return *this;
+    }
+    mint &operator -= (const mint a) {
+        if (mod <= (x += mod - a.x)) x -= mod;
+        return *this;
+    }
+    mint &operator *= (const mint a) {
+        (x *= a.x) %= mod;
+        return *this;
+    }
+    mint operator + (const mint a) const {
+        return mint(*this) += a;
+    }
+    mint operator - (const mint a) const {
+        return mint(*this) -= a;
+    }
+    mint operator * (const mint a) const {
+        return mint(*this) *= a;
+    }
+    mint pow(long long t) const {
+        if (!t) return 1;
+        mint a = pow(t >> 1);
+        a *= a;
+        if (t & 1) a *= *this;
+        return a;
+    }
 
-template<int MOD> struct Fp {
-    long long val;
-    constexpr Fp(long long v = 0) noexcept : val(v % MOD) {
-        if (val < 0) val += MOD;
+    // for prime mod
+    mint inv() const {
+        return pow(mod - 2);
     }
-    constexpr int getmod() { return MOD; }
-    constexpr Fp operator - () const noexcept {
-        return val ? MOD - val : 0;
+    mint &operator /= (const mint a) {
+        return *this = a.inv();
     }
-    constexpr Fp operator + (const Fp& r) const noexcept { return Fp(*this) += r; }
-    constexpr Fp operator - (const Fp& r) const noexcept { return Fp(*this) -= r; }
-    constexpr Fp operator * (const Fp& r) const noexcept { return Fp(*this) *= r; }
-    constexpr Fp operator / (const Fp& r) const noexcept { return Fp(*this) /= r; }
-    constexpr Fp& operator += (const Fp& r) noexcept {
-        val += r.val;
-        if (val >= MOD) val -= MOD;
-        return *this;
-    }
-    constexpr Fp& operator -= (const Fp& r) noexcept {
-        val -= r.val;
-        if (val < 0) val += MOD;
-        return *this;
-    }
-    constexpr Fp& operator *= (const Fp& r) noexcept {
-        val = val * r.val % MOD;
-        return *this;
-    }
-    constexpr Fp& operator /= (const Fp& r) noexcept {
-        long long a = r.val, b = MOD, u = 1, v = 0;
-        while (b) {
-            long long t = a / b;
-            a -= t * b; swap(a, b);
-            u -= t * v; swap(u, v);
-        }
-        val = val * u % MOD;
-        if (val < 0) val += MOD;
-        return *this;
-    }
-    constexpr bool operator == (const Fp& r) const noexcept {
-        return this->val == r.val;
-    }
-    constexpr bool operator != (const Fp& r) const noexcept {
-        return this->val != r.val;
-    }
-    friend constexpr ostream& operator << (ostream &os, const Fp<MOD>& x) noexcept {
-        return os << x.val;
-    }
-    friend constexpr Fp<MOD> modpow(const Fp<MOD> &a, long long n) noexcept {
-        if (n == 0) return 1;
-        auto t = modpow(a, n / 2);
-        t = t * t;
-        if (n & 1) t = t * a;
-        return t;
+    mint operator / (const mint a) const {
+        return mint(*this) /= a;
     }
 };
-
-const int MOD = 1000000007;
-using mint = Fp<MOD>;
-
-int main() {
-    mint a = 423342;
-    mint b = 74324;
-    mint c = 13231;
-    mint d = 8432455;
-
-    cout << (a * b + c) / d << endl;
-    return 0;
+istream &operator >> (istream &is, const mint &a) {
+    return is >> a.x;
+}
+ostream &operator << (ostream &os, const mint &a) {
+    return os << a.x;
 }
