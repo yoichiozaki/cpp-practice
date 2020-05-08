@@ -26,13 +26,13 @@ void DFS(const Graph &G, int v, int parent, int d)
 
 int main()
 {
-    cin >> n;
+    scanf("%d", &n);
     Graph G(n);
     depth.resize(n);
     for (int i = 0; i < n - 1; i++)
     {
         int s, t, w;
-        cin >> s >> t >> w;
+        scanf("%d %d %d", &s, &t, &w);
         G[s].push_back(Edge(t, w));
         G[t].push_back(Edge(s, w));
     }
@@ -42,7 +42,7 @@ int main()
         for (int i = 0; i < n; i++)
             depth[i] = 0;
         DFS(G, root, -1, 0);
-        cout << *max_element(depth.begin(), depth.end()) << endl;
+        printf("%d\n", *max_element(depth.begin(), depth.end()));
     }
     return 0;
 }
