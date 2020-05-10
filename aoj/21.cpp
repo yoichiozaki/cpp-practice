@@ -180,5 +180,16 @@ Polygon andrew_scan(Polygon s)
 
 int main()
 {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        double ax, ay, bx, by, cx, cy, dx, dy;
+        cin >> ax >> ay >> bx >> by >> cx >> cy >> dx >> dy;
+        if (is_parallel(Point(ax, ay), Point(bx, by), Point(cx, cy), Point(dx, dy)))
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
+    }
     return 0;
 }
