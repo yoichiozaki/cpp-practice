@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Kを固定して考えると，各グループの色の割り当て方とグループの分け方・グループ数が決まる
+
 // auto mod int
 // https://youtu.be/L8grWxBlIZ4?t=9858
 // https://youtu.be/ERZuLAxZffQ?t=4807 : optimize
 // https://youtu.be/8uowVvQ_-Mo?t=1329 : division
-const int mod = 1000000007;
+const int mod = 998244353;
 struct mint
 {
     long long x;
@@ -94,4 +96,23 @@ struct combination
             return 0;
         return fact[n] * ifact[k] * ifact[n - k];
     }
-};
+} c(200005);
+
+int main()
+{
+    int n, m, k;
+    cin >> n >> m >> k;
+
+    mint ans = 0;
+    mint color = m; // m色あるときに全部のブロックを1色で塗る時の色の選び方（初期値）
+    for (int x = n - 1; 0 <= x; x--)
+    {
+        mint now = color;
+        now *= c(n - 1, x);
+        if (x <= k)
+            ans += now;
+        color *= m - 1;
+    }
+    cout << ans << endl;
+    return 0;
+}
