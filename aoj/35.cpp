@@ -222,15 +222,17 @@ int main()
             d[i] = s2d(buf);
         }
         Polygon p;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 4; i++)
         {
             double _x, _y;
-            cin >> _x >> _y;
+            _x = d[2 * i];
+            _y = d[2 * i + 1];
             p.push_back(Point(_x, _y));
         }
-        if (is_convex(p)
+        if (is_convex(p))
             cout << "YES" << endl;
         else
-            cout << "No" << endl;
-        return 0;
+            cout << "NO" << endl;
     }
+    return 0;
+}

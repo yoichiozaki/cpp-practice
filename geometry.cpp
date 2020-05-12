@@ -178,7 +178,27 @@ Polygon andrew_scan(Polygon s)
     return l;
 }
 
+// 多角形の凸判定
+bool is_convex(Polygon p)
+{
+    int n = p.size();
+    vector<Point> tmp = p;
+    tmp.push_back(p[0]);
+    vector<int> wise(n - 1);
+    for (int i = 0; i < n - 1; i++)
+    {
+        wise[i] = ccw(tmp[i], tmp[i + 1], tmp[i + 2]);
+    }
+    for (int i = 0; i < n - 2; i++)
+    {
+        if (wise[i] != wise[i + 1])
+            return false;
+    }
+    return true;
+}
+
 int main()
 {
+
     return 0;
 }
