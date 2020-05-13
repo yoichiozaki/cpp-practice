@@ -54,7 +54,7 @@ int main()
                 ans.second = i;
             }
         }
-
+        cout << "Case " << C << ":" << endl;
         cout << ans.first << endl;
         cout << ans.second << endl;
     }
