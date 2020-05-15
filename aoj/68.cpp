@@ -199,5 +199,21 @@ bool is_convex(Polygon p)
 
 int main()
 {
+    int n;
+    while (cin >> n)
+    {
+        if (n == 0)
+            break;
+        Polygon p;
+        for (int i = 0; i < n; i++)
+        {
+            double x, y;
+            char comma;
+            cin >> x >> comma >> y;
+            p.push_back(Point(x, y));
+        }
+        Polygon q = andrew_scan(p);
+        cout << p.size() - q.size() << endl;
+    }
     return 0;
 }
