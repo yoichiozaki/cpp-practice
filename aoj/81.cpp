@@ -285,5 +285,12 @@ Line bisector(Point p1, Point p2)
 
 int main()
 {
+    Segment s;
+    Point p;
+    while (scanf("%lf,%lf,%lf,%lf,%lf,%lf", &(s.p1.x), &(s.p1.y), &(s.p2.x), &(s.p2.y), &(p.x), &(p.y)) == 6)
+    {
+        Point ans = reflect(s, p);
+        printf("%.8lf %.8lf\n", ans.x, ans.y);
+    }
     return 0;
 }
