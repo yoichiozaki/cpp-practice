@@ -13,7 +13,7 @@ int main()
         cin >> a;
         if (a < L)
             cout << L - a << endl;
-        else if (L <= a && a <= N)
+        else if (L <= a && a <= H)
             cout << 0 << endl;
         else
             cout << -1 << endl;
