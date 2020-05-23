@@ -7,6 +7,6 @@ int main()
     cin >> xa >> ya >> xb >> yb >> xc >> yc;
     xb -= xa, xc -= xa;
     yb -= ya, yc -= ya;
-    cout << abs(xb * yc - yb * xc) / 2.0 << endl;
+    cout << fixed << setprecision(12) << abs(xb * yc - yb * xc) / 2.0 << endl;
     return 0;
 }
