@@ -283,6 +283,102 @@ Line bisector(Point p1, Point p2)
     return Line(p.first, p.second);
 }
 
+struct Point3D
+{
+    double x, y, z;
+    Point3D() {}
+    Point3D(double x, double y, double z) : x(x), y(y), z(z) {}
+    Point3D operator+(Point3D p) { return Point3D(x + p.x, y + p.y, z + p.z); }
+    Point3D operator-(Point3D p) { return Point3D(x - p.x, y - p.y, z - p.z); }
+    Point3D operator*(double k) { return Point3D(x * k, y * k, z * k); }
+    Point3D operator/(double k) { return Point3D(x / k, y / k, z / k); }
+    double norm() { return x * x + y * y + z * z; }
+    double abs() { return sqrt(norm()); }
+
+    bool operator<(const Point3D &p) const
+    {
+        if (x != p.x)
+            return x < p.x;
+        else
+        {
+            if (y != p.y)
+                return y < p.y;
+            else
+            {
+                if (z != p.z)
+                    return z < p.z;
+                else
+                    return false;
+            }
+        }
+    }
+
+    bool operator==(const Point3D &p) const
+    {
+        return fabs(x - p.x) < EPS && fabs(y - p.y) < EPS && fabs(z - p.z) < EPS;
+    }
+};
+typedef Point3D Vector3D;
+typedef vector<Point3D> Polygon3D;
+
+struct Segment3D
+{
+    Point3D p1, p2;
+    Segment3D() {}
+    Segment3D(Point3D p1, Point3D p2) : p1(p1), p2(p2) {}
+};
+typedef Segment3D Line3D;
+
+struct Plane3D
+{
+    Point3D p1, p2, p3;
+    Plane3D() {}
+    Plane3D(Point3D p1, Point3D p2, Point3D p3) : p1(p1), p2(p2), p3(p3) {}
+};
+
+struct Ball3D
+{
+    Point3D c;
+    double r;
+    Ball3D(Point3D c, double r) : c(c), r(r) {}
+};
+
+double norm(Vector3D a)
+{
+    return a.x * a.x + a.y * a.y + a.z * a.z;
+}
+double abs(Vector3D a)
+{
+    return sqrt(norm(a));
+}
+double dot(Vector3D a, Vector3D b)
+{
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+Point3D cross(Vector3D a, Vector3D b)
+{
+    return Point3D(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+double area(Vector3D a, Vector3D b, Vector3D c)
+{
+    return abs(cross(b - a, c - a) / 2.0);
+}
+
+Polygon3D crossPoint3DSPL(Line3D s, Plane3D pl)
+{
+    Polygon3D res;
+    Point3D ph = cross(pl.p2 - pl.p1, pl.p3 - pl.p1);
+    double baseLnegth = dot(s.p2 - s.p1, ph);
+    if (abs(baseLnegth) < EPS)
+        return Polygon3D();
+    double crossLength = dot(pl.p1 - s.p1, ph);
+    double ratio = crossLength / baseLnegth;
+    if (ratio < -EPS || 1.0 + EPS < ratio)
+        return Polygon3D();
+    res.push_back(s.p1 + (s.p2 - s.p1) * ratio);
+    return res;
+}
+
 int main()
 {
     return 0;
