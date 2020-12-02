@@ -3,14 +3,9 @@ using namespace std;
 
 int main()
 {
-    string N;
-    cin >> N;
-    int sd = 0;
-    for (int i = 0; i < N.length(); i++)
-    {
-        sd += N[i] - '0';
-    }
-    if (sd % 9 == 0)
+    int X;
+    cin >> X;
+    if (30 <= X)
         cout << "Yes" << endl;
     else
         cout << "No" << endl;
