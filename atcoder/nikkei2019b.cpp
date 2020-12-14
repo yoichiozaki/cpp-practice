@@ -10,7 +10,6 @@ int main()
     int ans = 0;
     for (int i = 0; i < N; i++)
     {
-        cout << ans << endl;
         if ((A[i] != B[i] && B[i] == C[i]) || (A[i] == C[i] && B[i] != C[i]) || (C[i] != A[i] && B[i] == A[i]))
         {
             ans += 1;
