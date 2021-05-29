@@ -21,7 +21,7 @@ int main()
             if (B < N)
                 swap(head[A], head[B]);
             else if (N <= A)
-                swap(tail[A - N], tail[N - N]);
+                swap(tail[A - N], tail[B - N]);
             else
                 swap(head[A], tail[B - N]);
         }
