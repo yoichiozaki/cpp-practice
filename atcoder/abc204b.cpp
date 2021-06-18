@@ -13,8 +13,6 @@ int main()
         cin >> a;
         if (10 < a)
             ans += (a - 10);
-        else
-            ans += a;
     }
     cout << ans << endl;
     return 0;
