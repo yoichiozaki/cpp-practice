@@ -6,6 +6,6 @@ int main()
 {
     int x, y;
     cin >> x >> y;
-    return (6 - x - y) % 3;
+    cout << (6 - x - y) % 3 << endl;
     return 0;
 }
