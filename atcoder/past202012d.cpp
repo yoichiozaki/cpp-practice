@@ -25,6 +25,6 @@ int main()
     }
     sort(table.begin(), table.end());
     for (int i = 0; i < N; i++)
-        cout << get<0>(table[i]) << " " << get<1>(table[i]) << " " << get<2>(table[i]) << endl;
+        cout << get<2>(table[i]) << endl;
     return 0;
 }
