@@ -6,27 +6,33 @@ int main()
 {
     int N;
     cin >> N;
-    vector<int> A(2 * N, 0);
+
+    vector<long long> A(N);
     for (int i = 0; i < N; i++)
     {
         cin >> A[i];
-        A[i + N] = A[i];
     }
 
-    vector<int> accum(2 * N, 0);
-    accum[0] = A[0];
-    for (int i = 1; i < 2 * N; i++)
-    {
-        accum[i] = accum[i - 1] + A[i];
-    }
-
-    int total = accum[2 * N - 1];
-    int ans = total;
+    vector<long long> accum(2 * N + 1);
     for (int i = 0; i < N; i++)
     {
-        int pos = upper_bound(accum.begin(), accum.end(), total / 2 + accum[i]) - accum.begin();
-        ans = min(ans, abs(total - (accum[pos] - accum[i]) * 2));
-        ans = min(ans, abs(total - (accum[pos - 1] - accum[i]) * 2));
+        accum[i + 1] = accum[i] + A[i];
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        accum[i + N + 1] = accum[i + N] + A[i];
+    }
+
+    accum.emplace_back(1e+18);
+
+    long long ans = 1e+18;
+
+    for (int l = 0; l < N; ++l)
+    {
+        int r = lower_bound(accum.begin(), accum.end(), accum[l] + accum[N] / 2) - accum.begin();
+        ans = min(ans, abs(accum[N] - (accum[r] - accum[l]) * 2));
+        ans = min(ans, abs(accum[N] - (accum[r - 1] - accum[l]) * 2));
     }
 
     cout << ans << endl;
