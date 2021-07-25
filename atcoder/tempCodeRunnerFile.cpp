@@ -1,4 +1,5 @@
- j = 1; j <= (int)T.length(); j++)
+0; i < N; i++)
     // {
-    //     dp[0][j] = 0LL;
+    //     dist[i] = -1LL;
+    //     cnt[i] = 0LL;
     // }
