@@ -1,3 +1,4 @@
-
-        // for (; j < S.size(); j++)
-        //     d = d * 10LL + stol
+ j = 1; j <= (int)T.length(); j++)
+    // {
+    //     dp[0][j] = 0LL;
+    // }
