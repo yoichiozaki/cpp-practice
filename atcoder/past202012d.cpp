@@ -6,25 +6,43 @@ int main()
 {
     int N;
     cin >> N;
-    vector<tuple<long long, long long, string>> table(N);
+    vector<string> S(N);
+
+    vector<tuple<string, int, string>> sorted;
+
     for (int i = 0; i < N; i++)
     {
-        string S;
-        cin >> S;
-        long long j = 0;
-        long long k = 0;
-        while (S[j] == '0')
+        cin >> S[i];
+        int leading_zeros = 0;
+        int len = S[i].length();
+
+        for (int j = 0; j < len - 1; j++)
         {
-            j++;
-            k--;
+            if (S[i][j] == '0')
+                leading_zeros += 1;
+            else
+                break;
         }
-        long long d = 0;
-        for (; j < S.size(); j++)
-            d = d * 10LL + S[j] - '0';
-        table[i] = make_tuple(d, k, S);
+
+        sorted.push_back(make_tuple(S[i].substr(leading_zeros), leading_zeros, S[i]));
     }
-    sort(table.begin(), table.end());
-    for (int i = 0; i < N; i++)
-        cout << get<2>(table[i]) << endl;
+
+    sort(sorted.begin(), sorted.end(), [&](tuple<string, int, string> a, tuple<string, int, string> b)
+         {
+             if (get<0>(a).length() != get<0>(b).length())
+             {
+                 return get<0>(a).length() < get<0>(b).length();
+             }
+             if (get<0>(a) != get<0>(b))
+             {
+                 return get<0>(a) < get<0>(b);
+             }
+             return get<1>(a) > get<1>(b);
+         });
+
+    for (auto ele : sorted)
+    {
+        cout << get<2>(ele).c_str() << endl;
+    }
     return 0;
 }
