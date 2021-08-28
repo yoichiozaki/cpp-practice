@@ -10,7 +10,7 @@ int main()
     cin >> S;
 
     reverse(S.begin(), S.end());
-    for (int i = 0; i < 4; ++i) reverse(parts[i].begin(), divide[i].end());
+    for (int i = 0; i < 4; ++i) reverse(parts[i].begin(), parts[i].end());
 
     bool can = true;
     for (int i = 0; i < S.size();) {
