@@ -9,7 +9,6 @@ class Solution:
         def permutation(s, sofar):
             nonlocal flag
             if len(s) == 0:
-                print(sofar)
                 if sofar in s2:
                     flag = True
                 return
