@@ -1,6 +1,25 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = Counter(nums)
+
+        bucket = [[] for _ in range(len(nums) + 1)]
+        for char, freq in counter.items():
+            bucket[freq].append(char)
+
+        ans = []
+        for pos in range(len(bucket) - 1, -1, -1):
+            if len(bucket[pos]) != 0:
+                for ch in bucket[pos]:
+                    ans.append(ch)
+
+        ans = ans[:k]
+        return ans
+
 # 長さkのheapを使う
 # Time: O(n log k)
 # Space: O(n + k)
+
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         cnt = [(freq, num) for num, freq in Counter(nums).items()]
