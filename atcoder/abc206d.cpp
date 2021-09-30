@@ -5,7 +5,7 @@ using namespace std;
 using Graph = vector<vector<int>>;
 
 vector<bool> has_visited;
-int DFS(const Graph &G, int v, int len)
+void DFS(const Graph &G, int v)
 {
     has_visited[v] = true;
 
@@ -13,9 +13,8 @@ int DFS(const Graph &G, int v, int len)
     {
         if (has_visited[u])
             continue;
-        return DFS(G, u, len + 1);
+        DFS(G, u);
     }
-    return len;
 }
 
 int main()
@@ -29,6 +28,7 @@ int main()
     for (int i = 0; i < N; i++)
     {
         cin >> A[i];
+        A[i] -= 1;
         S.insert(A[i]);
     }
     for (int i = 0; i < N / 2; i++)
@@ -47,12 +47,12 @@ int main()
     {
         if (!has_visited[i])
         {
-            int l = DFS(G, i, 1);
-            if (l != 1)
-                cc++;
+            DFS(G, i);
+            cc++;
         }
     }
-
+    cout << S.size() << endl;
+    cout << cc << endl;
     cout << S.size() - cc << endl;
     return 0;
 }
