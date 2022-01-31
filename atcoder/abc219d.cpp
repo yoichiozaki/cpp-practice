@@ -31,14 +31,17 @@ int main()
 
     dp[0][0][0] = 0;
 
-    for (int i = 1; i <= N; i++)
+    for (int i = 0; i < N; i++)
     {
         for (int j = 0; j <= X; j++)
         {
             for (int k = 0; k <= Y; k++)
             {
-                dp[i][min(j + bento[i].first, X)][min(k + bento[i].second, Y)] = min(dp[i][min(j + bento[i].first, X)][min(k + bento[i].second, Y)], dp[i - 1][j][k] + 1);
-                dp[i][j][k] = min(dp[i][j][k], dp[i - 1][j][k]);
+                if (dp[i][j][k] < INF)
+                {
+                    dp[i + 1][j][k] = min(dp[i + 1][j][k], dp[i][j][k]);
+                    dp[i + 1][min(bento[i].first + j, X)][min(bento[i].second + k, Y)] = min(dp[i + 1][min(bento[i].first + j, X)][min(bento[i].second + k, Y)], dp[i][j][k] + 1);
+                }
             }
         }
     }
