@@ -4,14 +4,14 @@ using namespace std;
 
 int main()
 {
-    int N;
+    long long N;
     cin >> N;
     string S;
     cin >> S;
 
-    int ans = 0;
-    int n = 0;
-    for (int j = 0; j < N; j++)
+    long long ans = 0;
+    long long n = 0;
+    for (long long j = 0; j < N; j++)
     {
         if (0 < j && S[j] == S[j - 1])
             n += 1;
