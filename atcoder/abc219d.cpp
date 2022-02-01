@@ -11,8 +11,8 @@ int main()
     //   - i = 0
     //       - dp[0][0][0] = 0, それ以外は状態としてありえない
     //   - i = 1, 2, ..., N
-    //       - dp[i][min(j + Ai, X)][min(k + Bi, Y)] <- min(dp[i][min(j + Ai, X)][min(k + Bi, Y)], dp[i - 1][j][k] + 1)
-    //       - dp[i][j][k] <- min(dp[i][j][k], dp[i - 1][j][k])
+    //       - dp[i + 1][j][k] = min(dp[i + 1][j][k], dp[i][j][k]);
+    //       - dp[i + 1][min(Ai + j, X)][min(Bi + k, Y)] = min(dp[i + 1][min(Ai + j, X)][min(Bi + k, Y)], dp[i][j][k] + 1);
 
     const int INF = INT_MAX / 2;
     int N;
