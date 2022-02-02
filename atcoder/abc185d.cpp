@@ -3,86 +3,31 @@ using namespace std;
 
 int main()
 {
-    int N, M;
+    long long N, M;
     cin >> N >> M;
-    vector<int> A(M + 2, 0);
-    for (int i = 1; i < M + 1; i++)
+    vector<int> A(M);
+    for (int i = 0; i < M; i++)
         cin >> A[i];
-    A[M + 1] = N + 1;
     sort(A.begin(), A.end());
-    vector<int> B(M + 1, 0);
-    for (int i = 0; i < M + 1; i++)
-        B[i] = A[i + 1] - A[i] - 1;
-    int k;
-    if (B[0] == 0)
-    {
-        if (B[M] == 0)
-        {
-            k = *min_element(B.begin() + 1, B.end() - 1);
-        }
-        else
-        {
-            k = *min_element(B.begin() + 1, B.end());
-        }
-    }
-    else
-    {
-        if (B[M] == 0)
-        {
-            k = *min_element(B.begin(), B.end() - 1);
-        }
-        else
-        {
-            k = *min_element(B.begin(), B.end());
-        }
-    }
-    if (k == 0)
-    {
-        cout << 0 << endl;
-        return 0;
-    }
-    int cnt = 0;
+    A.push_back(N + 1);
 
-    if (B[0] == 0)
+    int curr = 1;
+    vector<int> B;
+    for (int i = 0; i < M + 1; i++)
     {
-        if (B[M] == 0)
-        {
-            for (int i = 1; i < B.size() - 1; i++)
-            {
-                cnt += (B[i] / k) + (B[i] % k == 0 ? 0 : 1);
-            }
-            cout << cnt << endl;
-            return 0;
-        }
-        else
-        {
-            for (int i = 1; i < B.size(); i++)
-            {
-                cnt += (B[i] / k) + (B[i] % k == 0 ? 0 : 1);
-            }
-            cout << cnt << endl;
-            return 0;
-        }
+        int width = A[i] - curr;
+        if (width != 0)
+            B.push_back(width);
+        curr = A[i] + 1;
     }
-    else
-    {
-        if (B[M] == 0)
-        {
-            for (int i = 0; i < B.size() - 1; i++)
-            {
-                cnt += (B[i] / k) + (B[i] % k == 0 ? 0 : 1);
-            }
-            cout << cnt << endl;
-            return 0;
-        }
-        else
-        {
-            for (int i = 0; i < B.size(); i++)
-            {
-                cnt += (B[i] / k) + (B[i] % k == 0 ? 0 : 1);
-            }
-            cout << cnt << endl;
-            return 0;
-        }
-    }
+
+    int k = INT_MAX / 2;
+    for (int width : B)
+        k = min(k, width);
+
+    int ans = 0;
+    for (int width : B)
+        ans += (width + k - 1) / k;
+    cout << ans << endl;
+    return 0;
 }

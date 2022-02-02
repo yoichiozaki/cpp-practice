@@ -22,7 +22,7 @@ class Solution:
         for num in nums:
             xor1 ^= num
 
-        # 1が立ってる最下位桁を取る
+        # 1が立ってる最下位桁を取る（ホントはどこの桁でもいい）
         for d in range(32):
             if xor1 & 1 << d:
                 i = d
