@@ -4,9 +4,6 @@ using namespace std;
 
 int main()
 {
-    // 0 90 270 315 150
-    // 0 90 150 270 315 360
-    //  90 60 120 45 45
     int N;
     cin >> N;
     vector<int> A(N + 1, 0);
