@@ -66,3 +66,26 @@ class Solution:
                     dfs(root.right, targetSum - root.val, ans)
         dfs(root, targetSum, ans)
         return len(ans) != 0
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        ans = []
+
+        def dfs(node, sofar, ans):
+            if node is not None:
+                sofar += node.val
+                if node.left is None and node.right is None and sofar == targetSum:
+                    ans.append(True)
+                if node.left is not None:
+                    dfs(node.left, sofar, ans)
+                if node.right is not None:
+                    dfs(node.right, sofar, ans)
+        dfs(root, 0, ans)
+        return len(ans) != 0
