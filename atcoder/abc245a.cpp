@@ -12,7 +12,9 @@ int main()
     {
         if (B < D)
             cout << "Takahashi" << endl;
-        else if (B >= D)
+        else if (B == D)
+            cout << "Takahashi" << endl;
+        else
             cout << "Aoki" << endl;
     }
     else
