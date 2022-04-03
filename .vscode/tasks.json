@@ -13,7 +13,6 @@
                 "-DONLINE_JUDGE",
                 "-I/opt/boost/gcc/include",
                 "-L/opt/boost/gcc/lib",
-                "-I${workspaceFolder}/ac-library",
                 "-o",
                 "'${workspaceFolder}/problem.exe'",
                 "'${file}'",

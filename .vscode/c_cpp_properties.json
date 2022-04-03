@@ -3,7 +3,6 @@
         {
             "name": "WSL",
             "includePath": [
-                "${workspaceFolder}/ac-library/",
                 "${workspaceFolder}/**"
             ],
             "defines": [],
