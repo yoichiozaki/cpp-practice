@@ -8,9 +8,7 @@ class Solution:
         nums.sort(reverse=True) # 大きい数字から使用することで枝刈り可能
         def dfs(pos):
             if pos == len(nums):
-                for p in partitions:
-                    if p != target:
-                        return False
+                return len(set(partitions)) == 1
                 return True
             for i in range(k):
                 if partitions[i] + nums[pos] <= target:
@@ -18,5 +16,7 @@ class Solution:
                     if dfs(pos + 1):
                         return True
                     partitions[i] -= nums[pos]
+                    if partitions[i] == 0: # partitions[i]にnums[pos]を使えなかった結果partitions[i]に含まれる数字がないならそれ以降は調べるまでもない
+                        break
             return False
         return dfs(0)
