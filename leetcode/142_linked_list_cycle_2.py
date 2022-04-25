@@ -12,7 +12,7 @@ class Solution:
         faster = head
         slower = head
         has_loop = False
-        while faster.next is not None and faster.next.next is not None:
+        while faster.next is not None and faster.next.next is not None: # fasterが先に行くのでfasterが進めるまで進む
             slower = slower.next
             faster = faster.next.next
             if slower == faster:
