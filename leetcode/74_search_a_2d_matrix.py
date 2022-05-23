@@ -32,3 +32,6 @@ class Solution:
             else:
                 high = mid - 1
         return False
+
+
+# 実質一列にして二分探索するのと同じ
