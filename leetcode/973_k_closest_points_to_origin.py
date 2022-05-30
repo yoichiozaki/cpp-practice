@@ -8,3 +8,6 @@ class Solution:
             else:
                 heapq.heappush(heap, (dist, x, y))
         return [(x, y) for (_, x, y) in heap]
+
+
+# k番目以下・k番目以上の要素ときたら「空のheapから初めて長さがk以下になるようにheappush/heappushpop」
