@@ -1,3 +1,4 @@
+# Fを最大でk個含む最大連続部分列 or Tを最大でk個含む最大連続部分列
 class Solution:
     def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
         def longest_substring(s, ch, k):
